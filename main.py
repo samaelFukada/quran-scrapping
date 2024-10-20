@@ -9,12 +9,12 @@ import csv
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 # rentang surah yang ingin di-scrape
-surah_range = range(1, 4)  
+surah_range = range(1, 115)  
 
 # Membuka file CSV untuk menulis hasil scraping
 with open('korpus_parallel.csv', 'w', encoding='utf-8', newline='') as f:
     writer = csv.writer(f)
-    writer.writerow(["Surah", "Arabic", "Bahasa"])  # Header untuk file CSV
+    writer.writerow(["Arabic", "Bahasa"])  # Header baru tanpa kolom Surah
 
     # Iterasi melalui setiap surah
     for surah in surah_range:
@@ -57,9 +57,9 @@ with open('korpus_parallel.csv', 'w', encoding='utf-8', newline='') as f:
         arabic_texts = [element.text for element in arabic_elements]
         translation_texts = [element.text for element in translation_elements]
 
-        # Simpan hasil scraping ke dalam file CSV
+        # Simpan hasil scraping ke dalam file CSV tanpa kolom surah
         for arabic, translation in zip(arabic_texts, translation_texts):
-            writer.writerow([f'Surah {surah}', arabic, translation])
+            writer.writerow([arabic, translation])
 
 # Tutup browser setelah selesai
 driver.quit()
